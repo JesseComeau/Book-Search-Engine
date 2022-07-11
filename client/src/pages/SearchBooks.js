@@ -68,15 +68,10 @@ const SearchBooks = () => {
       return false;
     }
 
-    console.log(bookToSave);
-
     try {
-      console.log("here")
       const bookData = await addBook({
         variables: { ...bookToSave },
       });
-
-      console.log(bookData)
 
       // if book successfully saves to user's account, save book id to state
       setSavedBookIds([...savedBookIds, bookToSave.bookId]);
