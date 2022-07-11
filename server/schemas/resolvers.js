@@ -1,20 +1,20 @@
-const { User, Book } = require('../models');
+const { User } = require('../models');
 const { signToken } = require('../utils/auth');
 const { AuthenticationError } = require('apollo-server-express');
 
 const resolvers = {
   Query: {
-    user: async (parent, { username }) => {
-      const foundUser = await User.findOne({
-        $or: [{ _id: user ? user._id : params.id }, { username: username }],
-      });
-
-      if (!foundUser) {
-        throw new AuthenticationError('No User Found')
-      }
-
-      return foundUser
+    user: async (parent, { _id }) => {
+      return User.findById(_id)
+    },
   },
+
+  Mutation: {
+    createUser: async (parent, { username, email, password }) => {
+      const user = await User.create({ username, email, password });
+      const token = signToken(user);
+      return { token, user };
+    },
   }
 };
 
