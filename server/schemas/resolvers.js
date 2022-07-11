@@ -4,8 +4,8 @@ const { AuthenticationError } = require('apollo-server-express');
 
 const resolvers = {
   Query: {
-    user: async (parent, { _id }) => {
-      return User.findById(_id)
+    user: async (parent, args, context) => {
+      return User.findById(context.user._id)
     },
   },
 
@@ -42,6 +42,22 @@ const resolvers = {
           { _id: context.user._id },
           {
             $addToSet: { savedBooks: { authors, description, bookId, image, link, title } }
+          },
+          { new: true }
+        );
+      }
+
+      throw new AuthenticationError('You need to be logged in!');
+
+    },
+
+    deleteBook: async (parent, { _id }, context) => {
+
+      if (context.user) {
+        return await User.findOneAndUpdate(
+          { _id: context.user._id },
+          {
+            $pull: { savedBooks: { _id:_id } }
           },
           { new: true }
         );
