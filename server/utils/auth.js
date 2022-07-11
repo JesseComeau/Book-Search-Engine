@@ -19,7 +19,7 @@ module.exports = {
 
     try {
       const { data } = jwt.verify(token, secret, { maxAge: expiration });
-      req.player = data;
+      req.user = data;
     } catch {
     }
 
