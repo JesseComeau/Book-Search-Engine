@@ -58,7 +58,7 @@ const LoginForm = () => {
           <Form.Label htmlFor='email'>Email</Form.Label>
           <Form.Control
             type='text'
-            placeholder='test@test.com'
+            placeholder='email address'
             name='email'
             onChange={handleInputChange}
             value={userFormData.email}
@@ -71,7 +71,7 @@ const LoginForm = () => {
           <Form.Label htmlFor='password'>Password</Form.Label>
           <Form.Control
             type='password'
-            placeholder='123456'
+            placeholder='password'
             name='password'
             onChange={handleInputChange}
             value={userFormData.password}
