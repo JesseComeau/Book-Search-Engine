@@ -9,7 +9,7 @@ import { useMutation, useQuery } from '@apollo/client'
 
 const SavedBooks = () => {
 
-  const { loading, data } = useQuery(QUERY_USER, {
+  const { data } = useQuery(QUERY_USER, {
     variables: { _id: Auth.getProfile().data._id }
   });
 
@@ -28,9 +28,11 @@ const SavedBooks = () => {
       return false;
     }
     try {
-      const { data }= await deleteBook({
+      const deletedBook = await deleteBook({
         variables: { id, token },
       });
+
+      console.log(deletedBook)
 
       removeBookId(book.bookId);
     } catch (err) {
